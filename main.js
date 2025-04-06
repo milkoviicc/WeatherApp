@@ -22,7 +22,14 @@ let weather = {
         document.querySelector('.humidity').innerText = "Humidity: " + humidity + "%";
         document.querySelector('.wind').innerText = "Wind speed: " + speed + "km/h";
         document.querySelector('.weather').classList.remove('loading');
-        document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?" + name + "')";
+
+        fetch("https://api.unsplash.com/photos/random?query=" + name + "&orientation=landscape&count=1&client_id=v2CQ_R6yKXSAeH9xfqjxYa4pJQrgAvXzIAfDdBmBFwg").then((response) => response.json()).then((data) => {
+            const imageUrl = data[0].urls.full;
+            document.body.style.backgroundImage = `url(${imageUrl})`;
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundPosition = "center";
+            document.body.style.backgroundRepeat = "no-repeat";
+        });
     },
     search: function() {
         this.fetchWeather(document.querySelector('.search-bar').value);
